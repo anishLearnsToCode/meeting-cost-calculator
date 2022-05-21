@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
 import Box from '@mui/material/Box';
-import DashboardBar from "./DashboardBar";
-import { LeftPanel } from "./panel";
+import DashboardBar from './DashboardBar';
+import { LeftPanel, RightPanel } from './panel';
 
 
 const Dashboard = ({ dashboardEntries, children, drawerWidth = 240 }) => {
@@ -24,9 +24,7 @@ const Dashboard = ({ dashboardEntries, children, drawerWidth = 240 }) => {
                     drawerWidth={drawerWidth}
                 />
 
-                <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-                    {children}
-                </Box>
+                <RightPanel>{children}</RightPanel>
             </Box>
         </>
     );
