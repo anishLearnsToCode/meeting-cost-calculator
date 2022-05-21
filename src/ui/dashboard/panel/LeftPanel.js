@@ -6,7 +6,9 @@ import ListItem from '@mui/material/ListItem';
 import DashboardEntry from '../DashboardEntry';
 import Drawer from './Drawer';
 
-const LeftPanel = ({ dashboardEntries, drawerOpen, drawerWidth }) => {
+const LeftPanel = ({ dashboardEntries, drawerOpen, drawerWidth, onChangeEntry = () => {} }) => {
+
+
     return <>
         <Drawer variant="permanent" open={drawerOpen} drawerwidth={drawerWidth}>
             <DrawerHeader />
@@ -16,8 +18,10 @@ const LeftPanel = ({ dashboardEntries, drawerOpen, drawerWidth }) => {
                         <DashboardEntry
                             text={entry.text}
                             icon={entry.icon}
+                            isSelected={entry.isSelected}
                             drawerOpen={drawerOpen}
                             linkTo={entry.linkTo}
+                            onClick={() => onChangeEntry(index)}
                         />
                     </ListItem>
                 ))}

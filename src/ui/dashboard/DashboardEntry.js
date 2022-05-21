@@ -5,7 +5,7 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemButton from "@mui/material/ListItemButton";
 import {Link} from "react-router-dom";
 
-const DashboardEntry = ({ drawerOpen, icon, text, isSelected = false, linkTo }) => {
+const DashboardEntry = ({ drawerOpen, icon, text, isSelected = false, linkTo, onClick = () => {}}) => {
     return <>
         <Link to={linkTo}>
             <ListItemButton
@@ -15,6 +15,7 @@ const DashboardEntry = ({ drawerOpen, icon, text, isSelected = false, linkTo }) 
                     px: 2.5,
                     backgroundColor: isSelected ? '#f2f3fc' : 'white',
                 }}
+                onClick={onClick}
             >
                 <ListItemIcon
                     sx={{

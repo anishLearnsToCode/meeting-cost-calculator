@@ -5,15 +5,19 @@ import DashboardBar from './DashboardBar';
 import { LeftPanel, RightPanel } from './panel';
 
 
-const Dashboard = ({ dashboardEntries, children, drawerWidth = 240 }) => {
-    const [drawerOpen, setDrawerOpen] = useState(true);
-    const toggleDrawerState = () => setDrawerOpen(!drawerOpen);
-
+const Dashboard = ({
+   dashboardEntries,
+   children,
+   drawerWidth = 240,
+   drawerOpen,
+   onToggleDrawer,
+   onChangeEntry,
+  }) => {
     return (
         <>
             <DashboardBar
                 drawerOpen={drawerOpen}
-                toggleDrawerState={toggleDrawerState}
+                toggleDrawerState={onToggleDrawer}
                 title={'Meeting Cost Calculator Application'}
             />
 
@@ -22,6 +26,7 @@ const Dashboard = ({ dashboardEntries, children, drawerWidth = 240 }) => {
                     drawerOpen={drawerOpen}
                     dashboardEntries={dashboardEntries}
                     drawerWidth={drawerWidth}
+                    onChangeEntry={onChangeEntry}
                 />
 
                 <RightPanel>{children}</RightPanel>
