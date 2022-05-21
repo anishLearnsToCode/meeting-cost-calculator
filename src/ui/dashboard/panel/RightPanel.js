@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 
 const RightPanel = ({ children }) => {
     return <>
-        <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+        <Box component="main" sx={{ flexGrow: 1, p: 3 }} mt={7}>
             {children}
         </Box>
     </>;

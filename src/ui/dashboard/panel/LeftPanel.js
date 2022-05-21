@@ -13,7 +13,12 @@ const LeftPanel = ({ dashboardEntries, drawerOpen, drawerWidth }) => {
             <List>
                 {dashboardEntries.map((entry, index) => (
                     <ListItem key={`${index}-${entry.text}`} disablePadding sx={{ display: 'block' }}>
-                        <DashboardEntry text={entry.text} icon={entry.icon} drawerOpen={drawerOpen} />
+                        <DashboardEntry
+                            text={entry.text}
+                            icon={entry.icon}
+                            drawerOpen={drawerOpen}
+                            linkTo={entry.linkTo}
+                        />
                     </ListItem>
                 ))}
             </List>

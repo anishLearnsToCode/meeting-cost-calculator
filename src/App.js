@@ -1,16 +1,18 @@
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
-import ApplicationNavBar from "./components/ApplicationNavBar";
-import Box from "@mui/material/Box";
-import ApplicationDashboard from "./components/ApplicationDashboard";
+
+import ApplicationDashboard from './components/ApplicationDashboard';
+import Error404NotFoundPage from './components/pages/Error404NotFoundPage';
 
 function App() {
   return (
-    <>
-      <ApplicationNavBar />
-      <Box>
-          <ApplicationDashboard />
-      </Box>
-    </>
+    <Router>
+        <ApplicationDashboard />
+        <Routes>
+            <Route path='*' element={<Error404NotFoundPage />} />
+        </Routes>
+    </Router>
   );
 }
 
