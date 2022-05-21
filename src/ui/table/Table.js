@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import useEmployees from "../../hooks/useEmployees.hook";
 
 
 const Table = ({ rows, columns, onCellClick }) => {

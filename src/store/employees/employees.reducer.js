@@ -29,6 +29,20 @@ const employeesReducer = (state = EMPLOYEES_INITIAL_STATE, action) => {
             };
         }
 
+        case EMPLOYEES_ACTIONS.OPEN_NEW_EMPLOYEE_DIALOG: {
+            return {
+                ...state,
+                newEmployeeDialogIsOpen: true,
+            };
+        }
+
+        case EMPLOYEES_ACTIONS.CLOSE_NEW_EMPLOYEE_DIALOG: {
+            return {
+                ...state,
+                newEmployeeDialogIsOpen: false,
+            };
+        }
+
         default: return state;
     }
 };

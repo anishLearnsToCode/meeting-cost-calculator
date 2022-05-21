@@ -5,7 +5,6 @@ import { markAllAsFalse, markAsSelected } from '../../utils/array_utils';
 const dashboardReducer = (state = DASHBOARD_INITIAL_STATE, action) => {
     switch (action.type) {
         case DASHBOARD_ACTIONS.TOGGLE_DRAWER: {
-            console.log('called');
             return {
               ...state,
               isOpen: !state.isOpen,
@@ -13,7 +12,6 @@ const dashboardReducer = (state = DASHBOARD_INITIAL_STATE, action) => {
         }
 
         case DASHBOARD_ACTIONS.SELECT_ENTRY: {
-            console.log(action);
             return {
                 ...state,
                 entries: markAsSelected(

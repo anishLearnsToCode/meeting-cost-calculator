@@ -34,6 +34,8 @@ const selectedRowIds = new Set();
 const EMPLOYEES_INITIAL_STATE = {
     data,
     selectedRowIds,
+    nextEmployeeId: 3,
+    newEmployeeDialogIsOpen: false,
 };
 
 export default EMPLOYEES_INITIAL_STATE;

@@ -3,6 +3,7 @@ import {Box, Button, ButtonGroup, Typography} from '@mui/material';
 import Table from "../../../ui/table";
 import EMPLOYEES_TABLE_COLUMN_CONFIG from "./table-column.config";
 import useEmployees from "../../../hooks/useEmployees.hook";
+import NewEmployeeDialog from "./NewEmployeeDialog";
 
 const EmployeesPage = () => {
     const {
@@ -10,6 +11,7 @@ const EmployeesPage = () => {
         toggleSelectedRow,
         rowsAreSelected,
         deleteSelectedEmployees,
+        newEmployeeDialog,
     } = useEmployees();
 
     return <>
@@ -17,7 +19,9 @@ const EmployeesPage = () => {
             Employees Page
         </Typography>
 
-        <Button variant='contained' sx={{mr: 2}}>Add Employee</Button>
+        <Button variant='contained' sx={{mr: 2}} onClick={newEmployeeDialog.open}>
+            Add Employee
+        </Button>
         <Button variant='contained' disabled={!rowsAreSelected} color='error' onClick={deleteSelectedEmployees}>
             Delete Employee(s)
         </Button>
@@ -29,6 +33,8 @@ const EmployeesPage = () => {
                 onCellClick={event => toggleSelectedRow(event.row.id)}
             />
         </Box>
+
+        <NewEmployeeDialog isOpen={true} onClose={newEmployeeDialog.close}/>
     </>;
 };
 

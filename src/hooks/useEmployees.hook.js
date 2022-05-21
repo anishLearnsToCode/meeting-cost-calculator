@@ -7,6 +7,7 @@ const useEmployees = () => {
     const dispatch = useDispatch();
     const employees = useSelector(state => state.employees.data);
     const selectedRowIds = useSelector(state => state.employees.selectedRowIds);
+    const newEmployeeDialogIsOpen = useSelector(state => state.employees.newEmployeeDialogIsOpen);
 
     const employeesTableRepresentation = useMemo(() => {
         const result = [];
@@ -32,10 +33,23 @@ const useEmployees = () => {
         type: EMPLOYEES_ACTIONS.REMOVE_EMPLOYEES,
     });
 
+    const openNewEmployeeDialog = () => dispatch({
+        type: EMPLOYEES_ACTIONS.OPEN_NEW_EMPLOYEE_DIALOG,
+    });
+
+    const closeNewEmployeeDialog = () => dispatch({
+        type: EMPLOYEES_ACTIONS.CLOSE_NEW_EMPLOYEE_DIALOG,
+    });
+
     return {
         employees,
         employeesTableRepresentation,
         rowsAreSelected,
+        newEmployeeDialog: {
+            isOpen: newEmployeeDialogIsOpen,
+            open: openNewEmployeeDialog,
+            close: closeNewEmployeeDialog,
+        },
         toggleSelectedRow,
         deleteSelectedEmployees,
     };
