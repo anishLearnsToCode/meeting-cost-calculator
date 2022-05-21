@@ -1,6 +1,6 @@
 import DASHBOARD_INITIAL_STATE from './dashboard.state';
 import DASHBOARD_ACTIONS from './dashboard.actions';
-import { markAsSelected } from '../../utils/array_utils';
+import { markAllAsFalse, markAsSelected } from '../../utils/array_utils';
 
 const dashboardReducer = (state = DASHBOARD_INITIAL_STATE, action) => {
     switch (action.type) {
@@ -13,9 +13,13 @@ const dashboardReducer = (state = DASHBOARD_INITIAL_STATE, action) => {
         }
 
         case DASHBOARD_ACTIONS.SELECT_ENTRY: {
+            console.log(action);
             return {
                 ...state,
-                entries: markAsSelected([...state.unselectedEntries], action.payload.index),
+                entries: markAsSelected(
+                    markAllAsFalse([...DASHBOARD_INITIAL_STATE.entries]),
+                    action.payload.index
+                ),
             };
         }
 
