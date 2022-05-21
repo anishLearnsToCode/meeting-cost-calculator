@@ -7,7 +7,7 @@ import {
     DialogContent,
     DialogTitle,
     TextField,
-    Stack, Autocomplete,
+    Stack, Autocomplete, InputLabel, Select, MenuItem, FormControl,
 } from '@mui/material';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import useTextInput from '../../../hooks/useTextInput.hook';
@@ -106,14 +106,15 @@ const CreateNewMeetingDialog = ({ isOpen, onClose }) => {
     const [date, setDate] = useState(new Date());
     const [startTime, setStartTime] = useState(new Date());
     const [endTime, setEndTime] = useState(new Date());
-
+    const [peopleInvitedToMeeting, setPeopleInvitedToMeeting] = useState(new Set());
+    const [frequency, setFrequency] = useState('Does Not Repeat');
     const endTimeLessThanStartTime = useMemo(() => endTime < startTime, [startTime, endTime]);
 
     const getEmployeeLabel = employee => {
         return `${employee.firstName} ${employee.lastName} (#${employee.id})`;
     };
 
-    const [peopleInvitedToMeeting, setPeopleInvitedToMeeting] = useState(new Set());
+
 
     const updatePeopleInMeeting = people => {
         const set = new Set();
@@ -122,7 +123,7 @@ const CreateNewMeetingDialog = ({ isOpen, onClose }) => {
         }
         setPeopleInvitedToMeeting(set);
     };
-    
+
     return <>
         <Dialog open={isOpen} onClose={onClose}>
             <DialogTitle>Enter Meeting Details</DialogTitle>
@@ -179,24 +180,42 @@ const CreateNewMeetingDialog = ({ isOpen, onClose }) => {
 
                         {endTimeLessThanStartTime && <p>End time can't be less than start time !!</p>}
                     </Stack>
-
-                    <Autocomplete
-                        multiple
-                        id="people"
-                        options={employees}
-                        getOptionLabel={getEmployeeLabel}
-                        filterSelectedOptions
-                        renderInput={(params) => (
-                            <TextField
-                                {...params}
-                                label="Meeting Participants"
-                                placeholder="Enter people you wish to invite to meeting"
-                            />
-                        )}
-                        onChange={(event, value) => updatePeopleInMeeting(value)}
-                        sx={{mt: 3}}
-                    />
                 </LocalizationProvider>
+
+                <Autocomplete
+                    multiple
+                    id="people"
+                    options={employees}
+                    getOptionLabel={getEmployeeLabel}
+                    filterSelectedOptions
+                    renderInput={(params) => (
+                        <TextField
+                            {...params}
+                            label="Meeting Participants"
+                            placeholder="Enter people you wish to invite to meeting"
+                        />
+                    )}
+                    onChange={(event, value) => updatePeopleInMeeting(value)}
+                    sx={{mt: 3}}
+                />
+
+                <Box sx={{ minWidth: 120, mt: 4}}>
+                    <FormControl fullWidth>
+                        <InputLabel id="freq">Meeting Frequency</InputLabel>
+                        <Select
+                            labelId="freq"
+                            id="freq"
+                            value={frequency}
+                            label="Meeting Frequency"
+                            onChange={event => setFrequency(event.target.value)}
+                        >
+                            <MenuItem value={'Does Not Repeat'}>Does Not Repeat</MenuItem>
+                            <MenuItem value={'Repeats daily (selected day + weekdays)'}>Repeats daily (selected day + weekdays)</MenuItem>
+                            <MenuItem value={'Weekly'}>Weekly</MenuItem>
+                            <MenuItem value={'Monthly'}>Monthly</MenuItem>
+                        </Select>
+                    </FormControl>
+                </Box>
             </DialogContent>
 
             <DialogActions sx={{mb: 2}}>
