@@ -113,6 +113,16 @@ const CreateNewMeetingDialog = ({ isOpen, onClose }) => {
         return `${employee.firstName} ${employee.lastName} (#${employee.id})`;
     };
 
+    const [peopleInvitedToMeeting, setPeopleInvitedToMeeting] = useState(new Set());
+
+    const updatePeopleInMeeting = people => {
+        const set = new Set();
+        for (let person of people) {
+            set.add(person.id);
+        }
+        setPeopleInvitedToMeeting(set);
+    };
+    
     return <>
         <Dialog open={isOpen} onClose={onClose}>
             <DialogTitle>Enter Meeting Details</DialogTitle>
@@ -183,6 +193,7 @@ const CreateNewMeetingDialog = ({ isOpen, onClose }) => {
                                 placeholder="Enter people you wish to invite to meeting"
                             />
                         )}
+                        onChange={(event, value) => updatePeopleInMeeting(value)}
                         sx={{mt: 3}}
                     />
                 </LocalizationProvider>
