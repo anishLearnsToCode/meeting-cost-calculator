@@ -3,8 +3,8 @@ import { Route, Routes } from 'react-router-dom';
 
 import Dashboard from '../ui/dashboard';
 import EmployeesPage from './pages/employees';
-import MeetingsPage from './pages/MeetingsPage';
-import AnalyticsPage from './pages/AnalyticsPage';
+import MeetingsPage from './pages/meetings';
+import AnalyticsPage from './pages/analytics';
 import useDashboard from '../hooks/useDashboard.hook';
 
 const ApplicationDashboard = () => {

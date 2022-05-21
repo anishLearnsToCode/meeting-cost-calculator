@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react';
-import {Box, Button, ButtonGroup, Typography} from '@mui/material';
-import Table from "../../../ui/table";
-import EMPLOYEES_TABLE_COLUMN_CONFIG from "./table-column.config";
-import useEmployees from "../../../hooks/useEmployees.hook";
-import NewEmployeeDialog from "./NewEmployeeDialog";
+import { Box, Button, Typography } from '@mui/material';
+import Table from '../../../ui/table';
+import EMPLOYEES_TABLE_COLUMN_CONFIG from './table-column.config';
+import useEmployees from '../../../hooks/useEmployees.hook';
+import NewEmployeeDialog from './NewEmployeeDialog';
 
 const EmployeesPage = () => {
     const {
@@ -16,11 +16,9 @@ const EmployeesPage = () => {
         employees,
     } = useEmployees();
 
-    useEffect(() => console.log(employees), [employees]);
-
     return <>
         <Typography variant='h4' pb={3}>
-            Employees Page
+            Employees
         </Typography>
 
         <Button variant='contained' sx={{mr: 2}} onClick={newEmployeeDialog.open}>

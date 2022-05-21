@@ -108,7 +108,7 @@ const NewEmployeeDialog = ({ isOpen = false, onClose, addNewEmployee }) => {
                         onChange={event => setSalary(event.target.value)}
                         helperText={'Annual Salary is required'}
                         sx={{mt: 2}}
-                    />;
+                    />
             </Box>
             </DialogContent>
 
