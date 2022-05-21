@@ -43,6 +43,17 @@ const employeesReducer = (state = EMPLOYEES_INITIAL_STATE, action) => {
             };
         }
 
+        case EMPLOYEES_ACTIONS.CREATE_NEW_EMPLOYEE: {
+            const employees = cloneMap(state.data);
+            employees.set(state.nextEmployeeId, { ...action.payload, id: state.nextEmployeeId });
+            console.log('rted', employees);
+            return {
+                ...state,
+                data: employees,
+                nextEmployeeId: state.nextEmployeeId + 1,
+            };
+        }
+
         default: return state;
     }
 };

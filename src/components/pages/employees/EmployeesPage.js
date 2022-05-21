@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Box, Button, ButtonGroup, Typography} from '@mui/material';
 import Table from "../../../ui/table";
 import EMPLOYEES_TABLE_COLUMN_CONFIG from "./table-column.config";
@@ -12,7 +12,11 @@ const EmployeesPage = () => {
         rowsAreSelected,
         deleteSelectedEmployees,
         newEmployeeDialog,
+        createNewEmployee,
+        employees,
     } = useEmployees();
+
+    useEffect(() => console.log(employees), [employees]);
 
     return <>
         <Typography variant='h4' pb={3}>
@@ -34,7 +38,11 @@ const EmployeesPage = () => {
             />
         </Box>
 
-        <NewEmployeeDialog isOpen={true} onClose={newEmployeeDialog.close}/>
+        <NewEmployeeDialog
+            isOpen={newEmployeeDialog.isOpen}
+            onClose={newEmployeeDialog.close}
+            addNewEmployee={createNewEmployee}
+        />
     </>;
 };
 

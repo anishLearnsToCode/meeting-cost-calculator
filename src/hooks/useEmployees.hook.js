@@ -41,6 +41,11 @@ const useEmployees = () => {
         type: EMPLOYEES_ACTIONS.CLOSE_NEW_EMPLOYEE_DIALOG,
     });
 
+    const createNewEmployee = employee => dispatch({
+        type: EMPLOYEES_ACTIONS.CREATE_NEW_EMPLOYEE,
+        payload: employee,
+    });
+
     return {
         employees,
         employeesTableRepresentation,
@@ -52,6 +57,7 @@ const useEmployees = () => {
         },
         toggleSelectedRow,
         deleteSelectedEmployees,
+        createNewEmployee,
     };
 };
 

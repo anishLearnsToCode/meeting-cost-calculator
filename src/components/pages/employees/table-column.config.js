@@ -26,7 +26,7 @@ const EMPLOYEES_TABLE_COLUMN_CONFIG = [
         field: 'normalizedSalary',
         headerName: 'Normalized Salary in CHF',
         width: 200,
-        valueGetter: params => `CHF ${params.row.normalizedSalary}`,
+        valueGetter: params => `CHF ${params.row.normalizedSalary.toFixed(2)}`,
         sortComparator: (a, b) => {
             const val1 = Number(a.substring(4));
             const val2 = Number(b.substring(4));

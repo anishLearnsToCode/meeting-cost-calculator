@@ -13,8 +13,8 @@ data.set(1, {
     id: 1,
     firstName: 'Ivica',
     lastName: 'Latta',
-    currency: 'chf',
-    annualSalary: 100_000,
+    currency: 'eur',
+    annualSalary: 34_123,
     email: 'ivica@yahoo.com',
     isSelected: false,
 });

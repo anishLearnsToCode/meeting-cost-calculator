@@ -8,9 +8,9 @@ import {
     DialogContent,
     DialogTitle, TextField
 } from '@mui/material';
-import CurrencySelector from "../../../ui/currency-selector";
+import CurrencySelector from '../../../ui/currency-selector';
 
-const NewEmployeeDialog = ({ isOpen = false, onClose }) => {
+const NewEmployeeDialog = ({ isOpen = false, onClose, addNewEmployee }) => {
     const [firstName, setFirstName] = useState();
     const [lastName, setLastName] = useState();
     const [email, setEmail] = useState();
@@ -33,6 +33,24 @@ const NewEmployeeDialog = ({ isOpen = false, onClose }) => {
         salary
     ]);
 
+    const createNewEmployee = () => {
+        addNewEmployee({
+            firstName,
+            lastName,
+            email,
+            currency,
+            annualSalary: salary,
+        });
+        onClose();
+        clearAllFields();
+    };
+
+    const clearAllFields = () => {
+      setFirstName(undefined);
+      setLastName(undefined);
+      setSalary(undefined);
+      setEmail(undefined);
+    }
 
     return <>
         <Dialog open={isOpen} onClose={onClose}>
@@ -96,7 +114,7 @@ const NewEmployeeDialog = ({ isOpen = false, onClose }) => {
 
 
             <DialogActions sx={{mb: 2}}>
-                <Button onClick={onClose} variant='contained' disabled={isDisabled}>
+                <Button onClick={createNewEmployee} variant='contained' disabled={isDisabled}>
                     Add Employee
                 </Button>
             </DialogActions>
