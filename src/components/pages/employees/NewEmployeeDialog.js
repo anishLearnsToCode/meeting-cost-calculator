@@ -8,8 +8,7 @@ import {
     DialogContent,
     DialogTitle, TextField
 } from '@mui/material';
-import CurrencySelector from "../../../ui/currency-selector/CurrencySelector";
-import useTextInput from "../../../ui/text-input/TextInput";
+import CurrencySelector from "../../../ui/currency-selector";
 
 const NewEmployeeDialog = ({ isOpen = false, onClose }) => {
     const [firstName, setFirstName] = useState();
