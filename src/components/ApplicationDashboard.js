@@ -2,12 +2,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import Dashboard from '../ui/dashboard';
-import {
-    CalendarMonthOutlined as MeetingsIcon,
-    PersonOutlineOutlined as EmployeesIcon,
-    SsidChartOutlined as AnalyticsIcon
-} from "@mui/icons-material";
-import EmployeesPage from './pages/EmployeesPage';
+import EmployeesPage from './pages/employees';
 import MeetingsPage from './pages/MeetingsPage';
 import AnalyticsPage from './pages/AnalyticsPage';
 import useDashboard from '../hooks/useDashboard.hook';
