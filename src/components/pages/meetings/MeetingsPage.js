@@ -1,7 +1,6 @@
 import React from 'react';
-import {Button, Typography} from "@mui/material";
-import CreateNewMeetingDialog from "./CreateNewMeetingDialog";
-import MaterialUIPickers from "./Sample";
+import { Button, Typography } from '@mui/material';
+import CreateNewMeetingDialog from './new-meeting-dialog';
 
 const EmployeesPage = () => {
     return <>

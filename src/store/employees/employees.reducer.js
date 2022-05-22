@@ -1,6 +1,6 @@
 import EMPLOYEES_INITIAL_STATE from "./employees.state";
 import EMPLOYEES_ACTIONS from "./employees.actions";
-import {cloneMap} from "../../utils/clone_utils";
+import {cloneMap} from "../../utils/clone.utils";
 
 const employeesReducer = (state = EMPLOYEES_INITIAL_STATE, action) => {
     switch (action.type) {

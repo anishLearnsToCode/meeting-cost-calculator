@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import {useEffect, useMemo} from 'react';
-import { convertToChf } from '../utils/currency_utils';
+import { convertToChf } from '../utils/currency.utils';
 import EMPLOYEES_ACTIONS from "../store/employees/employees.actions";
 
 const useEmployees = () => {

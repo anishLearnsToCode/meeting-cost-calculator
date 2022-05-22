@@ -10,12 +10,14 @@ import {
     Stack, Autocomplete, InputLabel, Select, MenuItem, FormControl, Typography, ToggleButtonGroup, ToggleButton,
 } from '@mui/material';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-import useTextInput from '../../../hooks/useTextInput.hook';
+import useTextInput from '../../../../hooks/useTextInput.hook';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
-import useEmployees from '../../../hooks/useEmployees.hook';
-import {convertFromChfTo, convertToChf} from "../../../utils/currency_utils";
+import useEmployees from '../../../../hooks/useEmployees.hook';
+import { convertFromChfTo, convertToChf } from '../../../../utils/currency.utils';
+import { MILLISECONDS_IN_HOUR, WORKING_HOURS_PER_YEAR } from '../../../../utils/time.utils';
+import CurrencySelectorButtonGroup from "../../../../ui/currency-selector-button-group";
 
 
 const CreateNewMeetingDialog = ({ isOpen, onClose }) => {
@@ -51,16 +53,6 @@ const CreateNewMeetingDialog = ({ isOpen, onClose }) => {
         setPeopleInvitedToMeeting(set);
     };
 
-    const WORKING_HOURS_PER_WEEK = 42;
-    const WEEKS_IN_MONTH = 4;
-    const MONTHS_IN_YEAR = 12;
-    const WORKING_HOURS_PER_MONTH = WORKING_HOURS_PER_WEEK * WEEKS_IN_MONTH;
-    const WORKING_HOURS_PER_YEAR = WORKING_HOURS_PER_MONTH * MONTHS_IN_YEAR;
-    const MILLISECONDS_IN_SECOND = 1_000;
-    const SECONDS_IN_MINUTE = 60;
-    const MINUTES_IN_HOUR = 60;
-    const MILLISECONDS_IN_HOUR = MINUTES_IN_HOUR * SECONDS_IN_MINUTE * MILLISECONDS_IN_SECOND;
-
     useEffect(() => {
         startTime.setSeconds(0);
         endTime.setSeconds(0);
@@ -69,10 +61,7 @@ const CreateNewMeetingDialog = ({ isOpen, onClose }) => {
     }, [startTime, endTime]);
 
     const meetingDurationHours = useMemo(() => {
-        console.log('diff', endTime - startTime);
-        const result = (endTime - startTime) / MILLISECONDS_IN_HOUR;
-        console.log('hours', result);
-        return result;
+        return (endTime - startTime) / MILLISECONDS_IN_HOUR;
     }, [startTime, endTime]);
 
     const sumOfAnnualSalariesOfMeetingParticipants = useMemo(() => {
@@ -85,10 +74,14 @@ const CreateNewMeetingDialog = ({ isOpen, onClose }) => {
         return result;
     }, [peopleInvitedToMeeting, employeeData]);
 
-    const totalCost = useMemo(
-        () => ((sumOfAnnualSalariesOfMeetingParticipants / WORKING_HOURS_PER_YEAR) * meetingDurationHours)
+    const repetitions = useMemo(() => {
+        return 1;
+    }, [frequency]);
+
+    const totalCost = useMemo(() =>
+            ((sumOfAnnualSalariesOfMeetingParticipants / WORKING_HOURS_PER_YEAR) * meetingDurationHours * repetitions)
             .toFixed(2),
-        [sumOfAnnualSalariesOfMeetingParticipants, meetingDurationHours]
+        [sumOfAnnualSalariesOfMeetingParticipants, meetingDurationHours, repetitions]
     );
 
     const meetingCost = useMemo(
@@ -191,25 +184,9 @@ const CreateNewMeetingDialog = ({ isOpen, onClose }) => {
 
                 <Typography variant='h6' mt={4} mb={1}>Meeting Cost</Typography>
 
-                <ToggleButtonGroup
-                    value={currency}
-                    exclusive
-                    onChange={event => setCurrency(event.target.value)}
-                    aria-label="text alignment"
-                    size='small'
-                >
-                    <ToggleButton value="chf" aria-label="left aligned">
-                        CHF
-                    </ToggleButton>
-                    <ToggleButton value="eur" aria-label="centered">
-                        € Euro
-                    </ToggleButton>
-                    <ToggleButton value="usd" aria-label="right aligned">
-                        $ USD
-                    </ToggleButton>
-                </ToggleButtonGroup>
+                <CurrencySelectorButtonGroup value={currency} onChange={setCurrency} />
 
-                <Typography paragraph>
+                <Typography paragraph mt={2}>
                     {meetingCost}
                 </Typography>
             </DialogContent>

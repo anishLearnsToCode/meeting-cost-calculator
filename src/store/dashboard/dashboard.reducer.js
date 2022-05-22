@@ -1,6 +1,6 @@
 import DASHBOARD_INITIAL_STATE from './dashboard.state';
 import DASHBOARD_ACTIONS from './dashboard.actions';
-import { markAllAsFalse, markAsSelected } from '../../utils/array_utils';
+import { markAllAsFalse, markAsSelected } from '../../utils/array.utils';
 
 const dashboardReducer = (state = DASHBOARD_INITIAL_STATE, action) => {
     switch (action.type) {
