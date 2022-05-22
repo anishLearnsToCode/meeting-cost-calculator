@@ -106,7 +106,7 @@ const useNewMeeting = () => {
             endTime: new Date(endTime),
             participants: new Set(peopleInvitedToMeeting),
             frequency,
-            meetingCostChf: totalCost,
+            meetingCostChf: Number(totalCost),
         }
     });
 
