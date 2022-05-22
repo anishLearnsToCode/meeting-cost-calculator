@@ -9,3 +9,9 @@ export const convertToChf = (currency, amount) => {
         return amount * CURRENCY_TO_CHF_RATE[currency.toUpperCase()];
     }
 };
+
+export const convertFromChfTo = (currency, amount) => {
+    if (CURRENCY_TO_CHF_RATE[currency.toUpperCase()]) {
+        return amount / CURRENCY_TO_CHF_RATE[currency.toUpperCase()];
+    }
+};

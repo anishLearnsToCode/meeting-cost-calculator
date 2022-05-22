@@ -7,88 +7,16 @@ import {
     DialogContent,
     DialogTitle,
     TextField,
-    Stack, Autocomplete, InputLabel, Select, MenuItem, FormControl,
+    Stack, Autocomplete, InputLabel, Select, MenuItem, FormControl, Typography, ToggleButtonGroup, ToggleButton,
 } from '@mui/material';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import useTextInput from '../../../hooks/useTextInput.hook';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import {TimePicker} from '@mui/x-date-pickers/TimePicker';
-import useEmployees from "../../../hooks/useEmployees.hook";
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import useEmployees from '../../../hooks/useEmployees.hook';
+import {convertFromChfTo, convertToChf} from "../../../utils/currency_utils";
 
-const top100Films = [
-    { title: 'The Shawshank Redemption', year: 1994 },
-    { title: 'The Godfather', year: 1972 },
-    { title: 'The Godfather: Part II', year: 1974 },
-    { title: 'The Dark Knight', year: 2008 },
-    { title: '12 Angry Men', year: 1957 },
-    { title: "Schindler's List", year: 1993 },
-    { title: 'Pulp Fiction', year: 1994 },
-    {
-        title: 'The Lord of the Rings: The Return of the King',
-        year: 2003,
-    },
-    { title: 'The Good, the Bad and the Ugly', year: 1966 },
-    { title: 'Fight Club', year: 1999 },
-    {
-        title: 'The Lord of the Rings: The Fellowship of the Ring',
-        year: 2001,
-    },
-    {
-        title: 'Star Wars: Episode V - The Empire Strikes Back',
-        year: 1980,
-    },
-    { title: 'Forrest Gump', year: 1994 },
-    { title: 'Inception', year: 2010 },
-    {
-        title: 'The Lord of the Rings: The Two Towers',
-        year: 2002,
-    },
-    { title: "One Flew Over the Cuckoo's Nest", year: 1975 },
-    { title: 'Goodfellas', year: 1990 },
-    { title: 'The Matrix', year: 1999 },
-    { title: 'Seven Samurai', year: 1954 },
-    {
-        title: 'Star Wars: Episode IV - A New Hope',
-        year: 1977,
-    },
-    { title: 'City of God', year: 2002 },
-    { title: 'Se7en', year: 1995 },
-    { title: 'The Silence of the Lambs', year: 1991 },
-    { title: "It's a Wonderful Life", year: 1946 },
-    { title: 'Life Is Beautiful', year: 1997 },
-    { title: 'The Usual Suspects', year: 1995 },
-    { title: 'Léon: The Professional', year: 1994 },
-    { title: 'Spirited Away', year: 2001 },
-    { title: 'Saving Private Ryan', year: 1998 },
-    { title: 'Once Upon a Time in the West', year: 1968 },
-    { title: 'American History X', year: 1998 },
-    { title: 'Interstellar', year: 2014 },
-    { title: 'Casablanca', year: 1942 },
-    { title: 'City Lights', year: 1931 },
-    { title: 'Psycho', year: 1960 },
-    { title: 'The Green Mile', year: 1999 },
-    { title: 'The Intouchables', year: 2011 },
-    { title: 'Modern Times', year: 1936 },
-    { title: 'Raiders of the Lost Ark', year: 1981 },
-    { title: 'Rear Window', year: 1954 },
-    { title: 'The Pianist', year: 2002 },
-    { title: 'The Departed', year: 2006 },
-    { title: 'Terminator 2: Judgment Day', year: 1991 },
-    { title: 'Back to the Future', year: 1985 },
-    { title: 'Whiplash', year: 2014 },
-    { title: 'Gladiator', year: 2000 },
-    { title: 'Memento', year: 2000 },
-    { title: 'The Prestige', year: 2006 },
-    { title: 'The Lion King', year: 1994 },
-    { title: 'Apocalypse Now', year: 1979 },
-    { title: 'Alien', year: 1979 },
-    { title: 'Sunset Boulevard', year: 1950 },
-    {
-        title: 'Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb',
-        year: 1964,
-    },
-];
 
 const CreateNewMeetingDialog = ({ isOpen, onClose }) => {
     const {
@@ -101,7 +29,7 @@ const CreateNewMeetingDialog = ({ isOpen, onClose }) => {
         updateValue: setAgenda,
     } = useTextInput();
 
-    const { employeesTableRepresentation: employees } = useEmployees();
+    const { employeesTableRepresentation: employees, employees: employeeData } = useEmployees();
 
     const [date, setDate] = useState(new Date());
     const [startTime, setStartTime] = useState(new Date());
@@ -109,12 +37,11 @@ const CreateNewMeetingDialog = ({ isOpen, onClose }) => {
     const [peopleInvitedToMeeting, setPeopleInvitedToMeeting] = useState(new Set());
     const [frequency, setFrequency] = useState('Does Not Repeat');
     const endTimeLessThanStartTime = useMemo(() => endTime < startTime, [startTime, endTime]);
+    const [currency, setCurrency] = useState('chf');
 
     const getEmployeeLabel = employee => {
         return `${employee.firstName} ${employee.lastName} (#${employee.id})`;
     };
-
-
 
     const updatePeopleInMeeting = people => {
         const set = new Set();
@@ -123,6 +50,51 @@ const CreateNewMeetingDialog = ({ isOpen, onClose }) => {
         }
         setPeopleInvitedToMeeting(set);
     };
+
+    const WORKING_HOURS_PER_WEEK = 42;
+    const WEEKS_IN_MONTH = 4;
+    const MONTHS_IN_YEAR = 12;
+    const WORKING_HOURS_PER_MONTH = WORKING_HOURS_PER_WEEK * WEEKS_IN_MONTH;
+    const WORKING_HOURS_PER_YEAR = WORKING_HOURS_PER_MONTH * MONTHS_IN_YEAR;
+    const MILLISECONDS_IN_SECOND = 1_000;
+    const SECONDS_IN_MINUTE = 60;
+    const MINUTES_IN_HOUR = 60;
+    const MILLISECONDS_IN_HOUR = MINUTES_IN_HOUR * SECONDS_IN_MINUTE * MILLISECONDS_IN_SECOND;
+
+    useEffect(() => {
+        startTime.setSeconds(0);
+        endTime.setSeconds(0);
+        setStartTime(startTime);
+        setEndTime(endTime);
+    }, [startTime, endTime]);
+
+    const meetingDurationHours = useMemo(() => {
+        console.log('diff', endTime - startTime);
+        const result = (endTime - startTime) / MILLISECONDS_IN_HOUR;
+        console.log('hours', result);
+        return result;
+    }, [startTime, endTime]);
+
+    const sumOfAnnualSalariesOfMeetingParticipants = useMemo(() => {
+        let result = 0;
+        for (let employeeId of peopleInvitedToMeeting) {
+            const employee = employeeData.get(employeeId);
+            result += convertToChf(employee.currency, employee.annualSalary);
+        }
+        console.log(result);
+        return result;
+    }, [peopleInvitedToMeeting, employeeData]);
+
+    const totalCost = useMemo(
+        () => ((sumOfAnnualSalariesOfMeetingParticipants / WORKING_HOURS_PER_YEAR) * meetingDurationHours)
+            .toFixed(2),
+        [sumOfAnnualSalariesOfMeetingParticipants, meetingDurationHours]
+    );
+
+    const meetingCost = useMemo(
+        () => convertFromChfTo(currency, totalCost).toFixed(2),
+        [totalCost, currency]
+    );
 
     return <>
         <Dialog open={isOpen} onClose={onClose}>
@@ -216,6 +188,30 @@ const CreateNewMeetingDialog = ({ isOpen, onClose }) => {
                         </Select>
                     </FormControl>
                 </Box>
+
+                <Typography variant='h6' mt={4} mb={1}>Meeting Cost</Typography>
+
+                <ToggleButtonGroup
+                    value={currency}
+                    exclusive
+                    onChange={event => setCurrency(event.target.value)}
+                    aria-label="text alignment"
+                    size='small'
+                >
+                    <ToggleButton value="chf" aria-label="left aligned">
+                        CHF
+                    </ToggleButton>
+                    <ToggleButton value="eur" aria-label="centered">
+                        € Euro
+                    </ToggleButton>
+                    <ToggleButton value="usd" aria-label="right aligned">
+                        $ USD
+                    </ToggleButton>
+                </ToggleButtonGroup>
+
+                <Typography paragraph>
+                    {meetingCost}
+                </Typography>
             </DialogContent>
 
             <DialogActions sx={{mb: 2}}>
