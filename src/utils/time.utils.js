@@ -1,4 +1,4 @@
-import { isWeekend, getYear } from "date-fns";
+import { isWeekend, getYear, differenceInCalendarWeeks, differenceInCalendarMonths } from "date-fns";
 
 export const WORKING_HOURS_PER_WEEK = 42;
 
@@ -36,4 +36,14 @@ export const workingDaysInYearFrom = date => {
 
     // include the start date as well if it was on a weekend
     return weekdays + (isWeekend(date) ? 1 : 0);
+};
+
+export const numberOfWeeksInYearFrom = date => {
+    return differenceInCalendarWeeks(firstDayOfNextYear(getYear(date)), date);
+};
+
+export const numberOfMonthsInYearFrom = date => {
+    const r = differenceInCalendarMonths(firstDayOfNextYear(getYear(date)), date);
+    console.log('diff', r);
+    return r;
 };

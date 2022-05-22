@@ -36,7 +36,15 @@ const CreateNewMeetingDialog = ({ isOpen, onClose }) => {
         currency,
         setCurrency,
         meetingCost,
+        isButtonDisabled,
+        createNewMeeting,
+        clearAllData,
     } = useNewMeeting();
+
+    const onCreateNewMeeting = () => {
+        createNewMeeting();
+        onClose();
+    };
 
     return <>
         <Dialog open={isOpen} onClose={onClose}>
@@ -93,7 +101,7 @@ const CreateNewMeetingDialog = ({ isOpen, onClose }) => {
             </DialogContent>
 
             <DialogActions sx={{mb: 2}}>
-                <Button onClick={null} variant='contained' disabled={false}>
+                <Button onClick={onCreateNewMeeting} variant='contained' disabled={isButtonDisabled}>
                     Create Meeting
                 </Button>
             </DialogActions>

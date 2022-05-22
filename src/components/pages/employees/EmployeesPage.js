@@ -13,7 +13,6 @@ const EmployeesPage = () => {
         deleteSelectedEmployees,
         newEmployeeDialog,
         createNewEmployee,
-        employees,
     } = useEmployees();
 
     return <>

@@ -2,23 +2,24 @@ import { useEffect, useMemo, useState } from 'react';
 
 import useTextInput from './useTextInput.hook';
 import useEmployees from './useEmployees.hook';
-import { MILLISECONDS_IN_HOUR, WORKING_HOURS_PER_YEAR, workingDaysInYearFrom } from '../utils/time.utils';
+import {
+    MILLISECONDS_IN_HOUR, numberOfMonthsInYearFrom,
+    numberOfWeeksInYearFrom,
+    WORKING_HOURS_PER_YEAR,
+    workingDaysInYearFrom
+} from '../utils/time.utils';
 import { convertFromChfTo, convertToChf } from '../utils/currency.utils';
 import {
     MEETING_FREQUENCY_OPTIONS
 } from '../components/pages/meetings/new-meeting-dialog/meetingFrequencyOptions.config';
+import {useDispatch} from "react-redux";
+import MEETING_ACTIONS from "../store/meetings/meeting.actions";
 
 const useNewMeeting = () => {
-    const {
-        value: title,
-        updateValue: setTitle,
-    } = useTextInput();
+    const dispatch = useDispatch();
 
-    const {
-        value: agenda,
-        updateValue: setAgenda,
-    } = useTextInput();
-
+    const { value: title, updateValue: setTitle } = useTextInput();
+    const { value: agenda, updateValue: setAgenda } = useTextInput();
     const { employeesTableRepresentation: employees, employees: employeeData } = useEmployees();
 
     const [date, setDate] = useState(new Date());
@@ -64,7 +65,8 @@ const useNewMeeting = () => {
         switch (frequency) {
             case MEETING_FREQUENCY_OPTIONS.NO_REPEAT: return 1;
             case MEETING_FREQUENCY_OPTIONS.EVERY_WEEKDAY: return workingDaysInYearFrom(date);
-            default: return 1;
+            case MEETING_FREQUENCY_OPTIONS.WEEKLY: return numberOfWeeksInYearFrom(date);
+            case MEETING_FREQUENCY_OPTIONS.MONTHLY: return numberOfMonthsInYearFrom(date);
         }
     }, [frequency, date]);
 
@@ -78,6 +80,43 @@ const useNewMeeting = () => {
         () => Math.max(convertFromChfTo(currency, totalCost).toFixed(2), 0),
         [totalCost, currency]
     );
+
+    const meetingHasNoParticipant = useMemo(() => peopleInvitedToMeeting.size === 0, [peopleInvitedToMeeting]);
+
+    const isButtonDisabled = useMemo(() =>
+        title === undefined || title === ''
+        || endTime < startTime
+        || meetingHasNoParticipant,
+        [
+            title,
+            startTime,
+            endTime,
+            meetingHasNoParticipant,
+    ]);
+
+    const createNewMeeting = () => dispatch({
+        type: MEETING_ACTIONS.CREATE_NEW_MEETING,
+        payload: {
+            title,
+            agenda,
+            date,
+            startTime,
+            endTime,
+            participants: peopleInvitedToMeeting,
+            frequency,
+            meetingCostChf: totalCost,
+        }
+    });
+
+    const clearAllData = () => {
+        setTitle('');
+        setAgenda('');
+        setDate(new Date());
+        setStartTime(new Date());
+        setEndTime(new Date());
+        setFrequency(MEETING_FREQUENCY_OPTIONS.NO_REPEAT);
+        setPeopleInvitedToMeeting(new Set());
+    };
 
     return {
         title,
@@ -98,6 +137,9 @@ const useNewMeeting = () => {
         currency,
         setCurrency,
         meetingCost,
+        isButtonDisabled,
+        createNewMeeting,
+        clearAllData,
     };
 };
 
