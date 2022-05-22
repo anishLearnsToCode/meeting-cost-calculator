@@ -50,7 +50,7 @@ const CreateNewMeetingDialog = ({ isOpen, onClose }) => {
                     required={true}
                     value={title}
                     onChange={setTitle}
-                    sx={{mb: 2}}
+                    sx={{mb: 2, mt: 1}}
                 />
 
                 <TextField
@@ -88,7 +88,7 @@ const CreateNewMeetingDialog = ({ isOpen, onClose }) => {
                 <CurrencySelectorButtonGroup value={currency} onChange={setCurrency} />
 
                 <Typography paragraph mt={2}>
-                    {meetingCost}
+                    {currency.toUpperCase()} {meetingCost}
                 </Typography>
             </DialogContent>
 

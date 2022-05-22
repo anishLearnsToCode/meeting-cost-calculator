@@ -1,7 +1,14 @@
 import React from 'react';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { MEETING_FREQUENCY_OPTIONS } from './meetingFrequencyOptions.config';
 
 const MeetingFrequencySelector = ({ value, onChange}) => {
+    const menuItems = [];
+    for (let i in MEETING_FREQUENCY_OPTIONS) {
+        const value = MEETING_FREQUENCY_OPTIONS[i];
+        menuItems.push(<MenuItem value={value} key={i}>{value}</MenuItem>);
+    }
+
     return <>
         <FormControl fullWidth>
             <InputLabel id="freq">Meeting Frequency</InputLabel>
@@ -12,10 +19,7 @@ const MeetingFrequencySelector = ({ value, onChange}) => {
                 label="Meeting Frequency"
                 onChange={event => onChange(event.target.value)}
             >
-                <MenuItem value={'Does Not Repeat'}>Does Not Repeat</MenuItem>
-                <MenuItem value={'Repeats daily (selected day + weekdays)'}>Repeats daily (selected day + weekdays)</MenuItem>
-                <MenuItem value={'Weekly'}>Weekly</MenuItem>
-                <MenuItem value={'Monthly'}>Monthly</MenuItem>
+                {menuItems}
             </Select>
         </FormControl>
     </>;

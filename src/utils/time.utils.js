@@ -1,3 +1,5 @@
+import { isWeekend, getYear } from "date-fns";
+
 export const WORKING_HOURS_PER_WEEK = 42;
 
 export const WEEKS_IN_MONTH = 4;
@@ -15,3 +17,23 @@ export const SECONDS_IN_MINUTE = 60;
 export const MINUTES_IN_HOUR = 60;
 
 export const MILLISECONDS_IN_HOUR = MINUTES_IN_HOUR * SECONDS_IN_MINUTE * MILLISECONDS_IN_SECOND;
+
+export const firstDayOfNextYear = year => {
+    return new Date(year + 1, 0, 1);
+};
+
+export const isWeekday = date => !isWeekend(date);
+
+export const workingDaysInYearFrom = date => {
+    const nextYear = firstDayOfNextYear(getYear(date));
+    let weekdays = 0;
+
+    for (let loop = new Date(date) ; loop < nextYear ; loop = new Date(loop.setDate(loop.getDate() + 1))) {
+        if (isWeekday(loop)) {
+            weekdays++;
+        }
+    }
+
+    // include the start date as well if it was on a weekend
+    return weekdays + (isWeekend(date) ? 1 : 0);
+};
