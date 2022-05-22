@@ -8,12 +8,13 @@ import {
     WORKING_HOURS_PER_YEAR,
     workingDaysInYearFrom
 } from '../utils/time.utils';
-import { convertFromChfTo, convertToChf } from '../utils/currency.utils';
+import { convertToChf } from '../utils/currency.utils';
 import {
     MEETING_FREQUENCY_OPTIONS
 } from '../components/pages/meetings/new-meeting-dialog/meetingFrequencyOptions.config';
-import {useDispatch} from "react-redux";
-import MEETING_ACTIONS from "../store/meetings/meeting.actions";
+import { useDispatch } from 'react-redux';
+import MEETING_ACTIONS from '../store/meetings/meeting.actions';
+import useAmountInCurrency from './useAmountInCurrency.hook';
 
 const useNewMeeting = () => {
     const dispatch = useDispatch();
@@ -67,6 +68,7 @@ const useNewMeeting = () => {
             case MEETING_FREQUENCY_OPTIONS.EVERY_WEEKDAY: return workingDaysInYearFrom(date);
             case MEETING_FREQUENCY_OPTIONS.WEEKLY: return numberOfWeeksInYearFrom(date);
             case MEETING_FREQUENCY_OPTIONS.MONTHLY: return numberOfMonthsInYearFrom(date);
+            default: return 0;
         }
     }, [frequency, date]);
 
@@ -76,12 +78,12 @@ const useNewMeeting = () => {
         [sumOfAnnualSalariesOfMeetingParticipants, meetingDurationHours, repetitions]
     );
 
-    const meetingCost = useMemo(
-        () => Math.max(convertFromChfTo(currency, totalCost).toFixed(2), 0),
-        [totalCost, currency]
-    );
+    const meetingCost = useAmountInCurrency(currency, totalCost);
 
-    const meetingHasNoParticipant = useMemo(() => peopleInvitedToMeeting.size === 0, [peopleInvitedToMeeting]);
+    const meetingHasNoParticipant = useMemo(
+        () => peopleInvitedToMeeting.size === 0,
+        [peopleInvitedToMeeting]
+    );
 
     const isButtonDisabled = useMemo(() =>
         title === undefined || title === ''

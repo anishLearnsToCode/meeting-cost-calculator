@@ -1,9 +1,10 @@
-import React, {useMemo, useState} from 'react';
-import {Box, Typography, Chip, Button} from '@mui/material';
-import {getFormattedDate, getFormattedTime} from '../../../../utils/time.utils';
-import useEmployees from "../../../../hooks/useEmployees.hook";
-import CurrencySelectorButtonGroup from "../../../../ui/currency-selector-button-group";
-import {convertFromChfTo} from "../../../../utils/currency.utils";
+import React, { useState } from 'react';
+
+import { Box, Typography, Chip, Button } from '@mui/material';
+import { getFormattedDate, getFormattedTime } from '../../../../utils/time.utils';
+import useEmployees from '../../../../hooks/useEmployees.hook';
+import CurrencySelectorButtonGroup from '../../../../ui/currency-selector-button-group';
+import useAmountInCurrency from '../../../../hooks/useAmountInCurrency.hook';
 
 const Meeting = ({ meeting, onDeleteMeeting }) => {
     const { employees } = useEmployees();
@@ -15,10 +16,7 @@ const Meeting = ({ meeting, onDeleteMeeting }) => {
     }
 
     const [currency, setCurrency] = useState('chf');
-    const meetingCost = useMemo(
-        () => convertFromChfTo(currency, meeting.meetingCostChf).toFixed(2),
-        [currency, meeting.meetingCostChf]
-    );
+    const meetingCost = useAmountInCurrency(currency, meeting.meetingCostChf);
 
     return <>
         <Box sx={{border: '1px solid grey', borderRadius: '4px', padding: 2, mb: 3}}>

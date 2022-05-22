@@ -22,6 +22,10 @@ const WedoSavingsWidget = () => {
             <Typography variant='h4' pt={3} color='#a5ab2e'>
                 {currency.toUpperCase()} {savingsWithWedo}
             </Typography>
+
+            <Typography paragraph pt={3} color='#a5ab2e'>
+                You save more than 30% on meetings by using WeDo
+            </Typography>
         </WidgetWrapper>
     </>;
 };
