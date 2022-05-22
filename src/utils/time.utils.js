@@ -43,7 +43,18 @@ export const numberOfWeeksInYearFrom = date => {
 };
 
 export const numberOfMonthsInYearFrom = date => {
-    const r = differenceInCalendarMonths(firstDayOfNextYear(getYear(date)), date);
-    console.log('diff', r);
-    return r;
+    return differenceInCalendarMonths(firstDayOfNextYear(getYear(date)), date);
+};
+
+export const getFormattedDate = date => {
+    const dateObj = new Date();
+    const month = dateObj.getUTCMonth() + 1; //months from 1-12
+    const day = dateObj.getUTCDate();
+    const year = dateObj.getUTCFullYear();
+    return day + "/" + month + "/" + year;
+};
+
+export const getFormattedTime = date => {
+    date = new Date(date);
+    return date.getHours() + ":" + date.getMinutes();
 };

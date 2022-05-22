@@ -99,10 +99,10 @@ const useNewMeeting = () => {
         payload: {
             title,
             agenda,
-            date,
-            startTime,
-            endTime,
-            participants: peopleInvitedToMeeting,
+            date: new Date(date),
+            startTime: new Date(startTime),
+            endTime: new Date(endTime),
+            participants: new Set(peopleInvitedToMeeting),
             frequency,
             meetingCostChf: totalCost,
         }

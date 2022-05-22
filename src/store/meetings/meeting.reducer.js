@@ -28,6 +28,15 @@ const meetingsReducer = (state = INITIAL_MEETINGS_PAGE_STATE, action) => {
             };
         }
 
+        case MEETING_ACTIONS.DELETE_MEETING: {
+            const meetings = cloneMap(state.meetings);
+            meetings.delete(action.payload.meetingId);
+            return {
+                ...state,
+                meetings,
+            };
+        }
+
         default: return state;
     }
 };

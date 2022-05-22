@@ -101,6 +101,9 @@ const CreateNewMeetingDialog = ({ isOpen, onClose }) => {
             </DialogContent>
 
             <DialogActions sx={{mb: 2}}>
+                <Button onClick={onClose} variant='contained' color='error'>
+                    Cancel
+                </Button>
                 <Button onClick={onCreateNewMeeting} variant='contained' disabled={isButtonDisabled}>
                     Create Meeting
                 </Button>
