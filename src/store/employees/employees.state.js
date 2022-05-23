@@ -1,31 +1,31 @@
 const data = new Map();
 data.set(0, {
     id: 0,
-    firstName: 'John',
-    lastName: 'Doe',
+    firstName: 'Robert',
+    lastName: 'Frost',
     currency: 'chf',
     annualSalary: 60_000,
-    email: 'john_doe@gmail.com',
+    email: 'robert_frost@gmail.com',
     isSelected: false,
 });
 
 data.set(1, {
     id: 1,
-    firstName: 'Ivica',
-    lastName: 'Latta',
+    firstName: 'Lord',
+    lastName: 'Byron',
     currency: 'eur',
     annualSalary: 34_123,
-    email: 'ivica@yahoo.com',
+    email: 'lord.byron.poetry@yahoo.com',
     isSelected: false,
 });
 
 data.set(2, {
     id: 2,
-    firstName: 'Jan',
-    lastName: 'Johan',
+    firstName: 'Mark',
+    lastName: 'Twain',
     currency: 'usd',
     annualSalary: 150_000,
-    email: 'jan@outlook.com',
+    email: 'mark@outlook.com',
     isSelected: false,
 });
 
