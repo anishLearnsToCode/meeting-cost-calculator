@@ -38,7 +38,7 @@ const CurrencySelector = ({ value, onChange }) => {
                 onChange={event => onChange(event.target.value)}
                 helperText=""
             >
-                {currencies.map((option) => (
+                {currencies.map(option => (
                     <MenuItem key={option.value} value={option.value}>
                         {option.label}
                     </MenuItem>
