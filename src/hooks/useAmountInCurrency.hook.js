@@ -1,5 +1,5 @@
-import {useMemo} from "react";
-import {convertFromChfTo} from "../utils/currency.utils";
+import { useMemo } from 'react';
+import { convertFromChfTo } from '../utils/currency.utils';
 
 const useAmountInCurrency = (currency, amountChf) => {
     return useMemo(
