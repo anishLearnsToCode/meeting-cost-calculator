@@ -16,7 +16,7 @@ import MeetingFrequencySelector from './MeetingFrequencySelector';
 import MeetingParticipantsSelector from "./MeetingParticipantsSelectpor";
 
 
-const CreateNewMeetingDialog = ({ isOpen, onClose }) => {
+const CreateNewMeetingDialog = ({ }) => {
     const {
         title,
         setTitle,
@@ -38,16 +38,16 @@ const CreateNewMeetingDialog = ({ isOpen, onClose }) => {
         meetingCost,
         isButtonDisabled,
         createNewMeeting,
-        clearAllData,
+        NewMeetingDialog,
     } = useNewMeeting();
 
     const onCreateNewMeeting = () => {
         createNewMeeting();
-        onClose();
+        NewMeetingDialog.close();
     };
 
     return <>
-        <Dialog open={isOpen} onClose={onClose}>
+        <Dialog open={NewMeetingDialog.isOpen} onClose={NewMeetingDialog.close}>
             <DialogTitle>Enter Meeting Details</DialogTitle>
             <DialogContent>
                 <TextField
@@ -101,7 +101,7 @@ const CreateNewMeetingDialog = ({ isOpen, onClose }) => {
             </DialogContent>
 
             <DialogActions sx={{mb: 2}}>
-                <Button onClick={onClose} variant='contained' color='error'>
+                <Button onClick={NewMeetingDialog.close} variant='contained' color='error'>
                     Cancel
                 </Button>
                 <Button onClick={onCreateNewMeeting} variant='contained' disabled={isButtonDisabled}>

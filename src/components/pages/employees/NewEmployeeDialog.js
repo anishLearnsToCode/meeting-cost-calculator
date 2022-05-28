@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React from 'react';
 
 import {
     Box,
@@ -9,29 +9,27 @@ import {
     DialogTitle, TextField
 } from '@mui/material';
 import CurrencySelector from '../../../ui/currency-selector';
+import useNewEmployeeDialog from '../../../hooks/useNewEmployeeDialog.hook';
+import useEmployees from '../../../hooks/useEmployees.hook';
 
-const NewEmployeeDialog = ({ isOpen = false, onClose, addNewEmployee }) => {
-    const [firstName, setFirstName] = useState();
-    const [lastName, setLastName] = useState();
-    const [email, setEmail] = useState();
-    const [salary, setSalary] = useState();
-    const [currency, setCurrency] = useState('CHF');
-
-    const isDisabled = useMemo(() => {
-        return firstName === ''
-            || firstName === undefined
-            || lastName === ''
-            || lastName === undefined
-            || email === ''
-            || email === undefined
-            || salary <= 0
-            || salary === undefined
-    }, [
+const NewEmployeeDialog = ({ onClose = () => {} }) => {
+    const {
+        NewEmployeeDialog,
         firstName,
+        setFirstName,
         lastName,
+        setLastName,
         email,
-        salary
-    ]);
+        setEmail,
+        salary,
+        setSalary,
+        currency,
+        setCurrency,
+        isDisabled,
+        clearAllFields,
+    } = useNewEmployeeDialog();
+
+    const { createNewEmployee: addNewEmployee } = useEmployees();
 
     const createNewEmployee = () => {
         addNewEmployee({
@@ -41,19 +39,17 @@ const NewEmployeeDialog = ({ isOpen = false, onClose, addNewEmployee }) => {
             currency,
             annualSalary: salary,
         });
-        onClose();
+        closeModal();
         clearAllFields();
     };
 
-    const clearAllFields = () => {
-      setFirstName(undefined);
-      setLastName(undefined);
-      setSalary(undefined);
-      setEmail(undefined);
-    }
+    const closeModal = () => {
+        NewEmployeeDialog.close();
+        onClose();
+    };
 
     return <>
-        <Dialog open={isOpen} onClose={onClose}>
+        <Dialog open={NewEmployeeDialog.isOpen} onClose={closeModal}>
             <DialogTitle>Enter New Employee Details</DialogTitle>
             <DialogContent>
                 <TextField
@@ -114,6 +110,9 @@ const NewEmployeeDialog = ({ isOpen = false, onClose, addNewEmployee }) => {
 
 
             <DialogActions sx={{mb: 2}}>
+                <Button onClick={NewEmployeeDialog.close} variant='contained' color='error'>
+                    Cancel
+                </Button>
                 <Button onClick={createNewEmployee} variant='contained' disabled={isDisabled}>
                     Add Employee
                 </Button>

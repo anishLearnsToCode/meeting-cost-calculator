@@ -12,7 +12,7 @@ import { convertToChf } from '../utils/currency.utils';
 import {
     MEETING_FREQUENCY_OPTIONS
 } from '../components/pages/meetings/new-meeting-dialog/meetingFrequencyOptions.config';
-import { useDispatch } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import MEETING_ACTIONS from '../store/meetings/meeting.actions';
 import useAmountInCurrency from './useAmountInCurrency.hook';
 
@@ -29,6 +29,15 @@ const useNewMeeting = () => {
     const [peopleInvitedToMeeting, setPeopleInvitedToMeeting] = useState(new Set());
     const [frequency, setFrequency] = useState(MEETING_FREQUENCY_OPTIONS.NO_REPEAT);
     const [currency, setCurrency] = useState('chf');
+    const newMeetingDialogIsOpen = useSelector(state => state.meetings.meetingDialogIsOpen);
+
+    const openNewMeetingsDialog = () => dispatch({
+        type: MEETING_ACTIONS.OPEN_NEW_MEETING_DIALOG,
+    });
+
+    const closeNewMeetingsDialog = () => dispatch({
+        type: MEETING_ACTIONS.CLOSE_NEW_MEETING_DIALOG,
+    });
 
     const getEmployeeLabel = employee => {
         return `${employee.firstName} ${employee.lastName} (#${employee.id})`;
@@ -142,6 +151,11 @@ const useNewMeeting = () => {
         isButtonDisabled,
         createNewMeeting,
         clearAllData,
+        NewMeetingDialog: {
+            isOpen: newMeetingDialogIsOpen,
+            open: openNewMeetingsDialog,
+            close: closeNewMeetingsDialog,
+        },
     };
 };
 

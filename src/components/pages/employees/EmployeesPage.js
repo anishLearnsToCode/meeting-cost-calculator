@@ -1,9 +1,11 @@
-import React, {useEffect} from 'react';
+import React from 'react';
+
 import { Box, Button, Typography } from '@mui/material';
 import Table from '../../../ui/table';
 import EMPLOYEES_TABLE_COLUMN_CONFIG from './table-column.config';
 import useEmployees from '../../../hooks/useEmployees.hook';
-import NewEmployeeDialog from './NewEmployeeDialog';
+import useNewEmployeeDialog from "../../../hooks/useNewEmployeeDialog.hook";
+
 
 const EmployeesPage = () => {
     const {
@@ -11,16 +13,16 @@ const EmployeesPage = () => {
         toggleSelectedRow,
         rowsAreSelected,
         deleteSelectedEmployees,
-        newEmployeeDialog,
-        createNewEmployee,
     } = useEmployees();
+
+    const { NewEmployeeDialog } = useNewEmployeeDialog();
 
     return <>
         <Typography variant='h4' pb={3}>
             Employees
         </Typography>
 
-        <Button variant='contained' sx={{mr: 2}} onClick={newEmployeeDialog.open}>
+        <Button variant='contained' sx={{mr: 2}} onClick={NewEmployeeDialog.open}>
             Add Employee
         </Button>
         <Button variant='contained' disabled={!rowsAreSelected} color='error' onClick={deleteSelectedEmployees}>
@@ -34,12 +36,6 @@ const EmployeesPage = () => {
                 onCellClick={event => toggleSelectedRow(event.row.id)}
             />
         </Box>
-
-        <NewEmployeeDialog
-            isOpen={newEmployeeDialog.isOpen}
-            onClose={newEmployeeDialog.close}
-            addNewEmployee={createNewEmployee}
-        />
     </>;
 };
 
