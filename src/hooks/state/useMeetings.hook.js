@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import MEETING_ACTIONS from "../store/meetings/meeting.actions";
+import MEETING_ACTIONS from "../../store/meetings/meeting.actions";
 
 const useMeetings = () => {
     const dispatch = useDispatch();

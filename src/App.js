@@ -10,9 +10,6 @@ function App() {
   return (
     <Router>
         <ApplicationDashboard />
-        <Routes>
-            <Route path='*' element={<Error404NotFoundPage />} />
-        </Routes>
         <AllModals />
     </Router>
   );

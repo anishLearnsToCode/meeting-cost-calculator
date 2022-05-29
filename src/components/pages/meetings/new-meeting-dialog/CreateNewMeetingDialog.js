@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import CurrencySelectorButtonGroup from '../../../../ui/currency-selector-button-group';
 import MeetingDateTimePickerSection from './MeetingDateTimePickerSection';
-import useNewMeeting from '../../../../hooks/useNewMeeting.hook';
+import useNewMeeting from '../../../../hooks/modals/useNewMeeting.hook';
 import MeetingFrequencySelector from './MeetingFrequencySelector';
 import MeetingParticipantsSelector from "./MeetingParticipantsSelectpor";
 

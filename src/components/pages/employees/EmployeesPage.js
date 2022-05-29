@@ -3,8 +3,8 @@ import React from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import Table from '../../../ui/table';
 import EMPLOYEES_TABLE_COLUMN_CONFIG from './table-column.config';
-import useEmployees from '../../../hooks/useEmployees.hook';
-import useNewEmployeeDialog from "../../../hooks/useNewEmployeeDialog.hook";
+import useEmployees from '../../../hooks/state/useEmployees.hook';
+import useNewEmployeeDialog from "../../../hooks/modals/useNewEmployeeDialog.hook";
 
 
 const EmployeesPage = () => {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-import useAnalytics from '../../../../hooks/useAnalytics.hook';
-import useAmountInCurrency from '../../../../hooks/useAmountInCurrency.hook';
+import useAnalytics from '../../../../hooks/state/useAnalytics.hook';
+import useAmountInCurrency from '../../../../hooks/ui/useAmountInCurrency.hook';
 import { WidgetWrapper } from '../../../../ui/widget';
 import { Typography } from '@mui/material';
 import CurrencySelectorButtonGroup from '../../../../ui/currency-selector-button-group';

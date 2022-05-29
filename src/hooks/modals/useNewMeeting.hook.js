@@ -1,20 +1,20 @@
 import { useEffect, useMemo, useState } from 'react';
 
-import useTextInput from './useTextInput.hook';
-import useEmployees from './useEmployees.hook';
+import useTextInput from '../ui/useTextInput.hook';
+import useEmployees from '../state/useEmployees.hook';
 import {
     MILLISECONDS_IN_HOUR, numberOfMonthsInYearFrom,
     numberOfWeeksInYearFrom,
     WORKING_HOURS_PER_YEAR,
     workingDaysInYearFrom
-} from '../utils/time.utils';
-import { convertToChf } from '../utils/currency.utils';
+} from '../../utils/time.utils';
+import { convertToChf } from '../../utils/currency.utils';
 import {
     MEETING_FREQUENCY_OPTIONS
-} from '../components/pages/meetings/new-meeting-dialog/meetingFrequencyOptions.config';
+} from '../../components/pages/meetings/new-meeting-dialog/meetingFrequencyOptions.config';
 import {useDispatch, useSelector} from 'react-redux';
-import MEETING_ACTIONS from '../store/meetings/meeting.actions';
-import useAmountInCurrency from './useAmountInCurrency.hook';
+import MEETING_ACTIONS from '../../store/meetings/meeting.actions';
+import useAmountInCurrency from '../ui/useAmountInCurrency.hook';
 
 const useNewMeeting = () => {
     const dispatch = useDispatch();

@@ -9,8 +9,8 @@ import {
     DialogTitle, TextField
 } from '@mui/material';
 import CurrencySelector from '../../../ui/currency-selector';
-import useNewEmployeeDialog from '../../../hooks/useNewEmployeeDialog.hook';
-import useEmployees from '../../../hooks/useEmployees.hook';
+import useNewEmployeeDialog from '../../../hooks/modals/useNewEmployeeDialog.hook';
+import useEmployees from '../../../hooks/state/useEmployees.hook';
 
 const NewEmployeeDialog = ({ onClose = () => {} }) => {
     const {

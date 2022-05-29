@@ -5,7 +5,7 @@ import Dashboard from '../ui/dashboard';
 import EmployeesPage from './pages/employees';
 import MeetingsPage from './pages/meetings';
 import AnalyticsPage from './pages/analytics';
-import useDashboard from '../hooks/useDashboard.hook';
+import useDashboard from '../hooks/state/useDashboard.hook';
 
 const ApplicationDashboard = () => {
     const {

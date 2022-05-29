@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import useAnalytics from "../../../../hooks/useAnalytics.hook";
+import useAnalytics from "../../../../hooks/state/useAnalytics.hook";
 import {Box, Typography} from "@mui/material";
 import CurrencySelectorButtonGroup from "../../../../ui/currency-selector-button-group";
-import useAmountInCurrency from "../../../../hooks/useAmountInCurrency.hook";
+import useAmountInCurrency from "../../../../hooks/ui/useAmountInCurrency.hook";
 import {WidgetWrapper} from "../../../../ui/widget";
 
 const TotalMeetingsCostWidget = () => {

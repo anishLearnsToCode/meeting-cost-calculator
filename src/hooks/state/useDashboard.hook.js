@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import DASHBOARD_ACTIONS from "../store/dashboard/dashboard.actions";
+import DASHBOARD_ACTIONS from "../../store/dashboard/dashboard.actions";
 
 const useDashboard = () => {
     const dispatch = useDispatch();

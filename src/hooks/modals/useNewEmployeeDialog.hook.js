@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import EMPLOYEES_ACTIONS from '../store/employees/employees.actions';
+import EMPLOYEES_ACTIONS from '../../store/employees/employees.actions';
 
 
 const useNewEmployeeDialog = () => {

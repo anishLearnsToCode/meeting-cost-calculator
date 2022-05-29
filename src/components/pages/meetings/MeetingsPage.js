@@ -2,9 +2,9 @@ import React from 'react';
 
 import { Box, Button, Typography } from '@mui/material';
 import CreateNewMeetingDialog from './new-meeting-dialog';
-import useMeetings from '../../../hooks/useMeetings.hook';
+import useMeetings from '../../../hooks/state/useMeetings.hook';
 import Meeting from './meeting/Meeting';
-import useNewMeeting from '../../../hooks/useNewMeeting.hook';
+import useNewMeeting from '../../../hooks/modals/useNewMeeting.hook';
 
 const MeetingsPage = () => {
     const { meetings, deleteMeeting } = useMeetings();

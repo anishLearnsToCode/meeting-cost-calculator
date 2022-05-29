@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 
 import { Box, Typography, Chip, Button } from '@mui/material';
 import { getFormattedDate, getFormattedTime } from '../../../../utils/time.utils';
-import useEmployees from '../../../../hooks/useEmployees.hook';
+import useEmployees from '../../../../hooks/state/useEmployees.hook';
 import CurrencySelectorButtonGroup from '../../../../ui/currency-selector-button-group';
-import useAmountInCurrency from '../../../../hooks/useAmountInCurrency.hook';
+import useAmountInCurrency from '../../../../hooks/ui/useAmountInCurrency.hook';
 
 const Meeting = ({ meeting, onDeleteMeeting }) => {
     const { employees } = useEmployees();
