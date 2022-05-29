@@ -1,19 +1,14 @@
-import {useCallback, useState} from 'react';
+import {useState} from 'react';
 
-const useDebounce = (delay = 1000) => {
-    const [timerId, setTimerId] = useState();
+const useDebounce = (debounceDelayMilliSecs = 500) => {
+    const [debounceTimerID, setDebounceTimerID] = useState(0);
 
-    const debounce = useCallback(func => {
-        if (timerId) {
-            clearTimeout(timerId);
-            setTimerId(null);
+    return func => {
+        if (debounceTimerID) {
+            clearTimeout(debounceTimerID);
         }
-
-        const timer = setTimeout(() => func(), delay);
-        setTimerId(timer);
-    }, [delay, timerId]);
-
-    return debounce;
+        setDebounceTimerID(setTimeout(() => func(), debounceDelayMilliSecs));
+    };
 };
 
 export default useDebounce;
